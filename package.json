@@ -1,7 +1,7 @@
 {
-  "name": "react-ssr",
+  "name": "spacex-programs",
   "version": "1.0.0",
-  "description": "Server side rendering project",
+  "description": "An React Redux Server Side Rendered App",
   "main": "index.js",
   "scripts": {
     "dev": "npm-run-all --parallel dev:*",
