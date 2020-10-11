@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchLaunches } from '../actions';
 
-const App = () => {
-  return (
-    <div>
-      <div>App COmponent with nodemon</div>
-      <button onClick={() => console.log('button click')}>Click me</button>
-    </div>
-  );
-};
+class App extends Component {
+  componentDidMount() {
+    this.props.fetchLaunches();
+  }
 
-export default App;
+  renderLaunches() {
+    return this.props.launches.map((program) => {
+      return <li key={program.flight_number}>{program.mission_name}</li>;
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <h3>Launches:</h3>
+        <ul>{this.renderLaunches()}</ul>
+      </div>
+    );
+  }
+}
+
+function mapStateToProps(state) {
+  return { launches: state.launches };
+}
+
+export default connect(mapStateToProps, { fetchLaunches })(App);
