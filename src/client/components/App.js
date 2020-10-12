@@ -27,4 +27,9 @@ function mapStateToProps(state) {
   return { launches: state.launches };
 }
 
+function loadData(store) {
+  return store.dispatch(fetchLaunches());
+}
+
+export { loadData };
 export default connect(mapStateToProps, { fetchLaunches })(App);
