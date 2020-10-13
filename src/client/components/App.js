@@ -1,30 +1,61 @@
 import React, { Component } from 'react';
+import Filters from './Filters';
+import ProgramsList from './ProgramsList';
 import { connect } from 'react-redux';
 import { fetchLaunches } from '../actions';
+import * as filterActions from '../actions/filterActions';
+import { bindActionCreators } from 'redux';
+import { filter } from 'lodash';
+//import './App.css';
 
 class App extends Component {
   componentDidMount() {
     this.props.fetchLaunches();
   }
 
-  renderLaunches() {
-    return this.props.launches.map((program) => {
-      return <li key={program.flight_number}>{program.mission_name}</li>;
-    });
+  componentWillReceiveProps(nextProps) {
+    debugger;
+    console.log(this.props.filters);
+    console.log(nextProps.filters);
+    if (this.props.filters !== nextProps.filters) {
+      console.log('not equal');
+      this.props.fetchLaunches();
+    }
   }
+
+  handleButtonClick = (type, value) => {
+    console.log(this.props);
+    this.props.updateFilters({
+      key: type,
+      value: value,
+    });
+  };
 
   render() {
     return (
       <div>
-        <h3>Launches:</h3>
-        <ul>{this.renderLaunches()}</ul>
+        {this.props.filters[0]}
+        <h2>SpaceX Launch Programs</h2>
+        <div className='main-content'>
+          <Filters onButtonClick={this.handleButtonClick} />
+          <ProgramsList launches={this.props.launches} />
+        </div>
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  return { launches: state.launches };
+  debugger;
+  return { launches: state.launches, filters: state.filters };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    //actions: bindActionCreators({ fetchLaunches, filterActions }, dispatch),
+    updateFilters: (filter) => dispatch(filterActions.updateFilters(filter)),
+    fetchLaunches: () => dispatch(fetchLaunches()),
+  };
 }
 
 function loadData(store) {
@@ -32,4 +63,4 @@ function loadData(store) {
 }
 
 export { loadData };
-export default connect(mapStateToProps, { fetchLaunches })(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
