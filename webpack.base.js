@@ -15,6 +15,11 @@ module.exports = {
           plugins: ['transform-class-properties'],
         },
       },
+      {
+        test: /(\.css)$/,
+        loader: 'css-loader',
+        exclude: /node_modules/,
+      },
     ],
   },
 };

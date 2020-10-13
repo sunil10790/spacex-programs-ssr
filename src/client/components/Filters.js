@@ -1,4 +1,4 @@
-//import './Filters.css';
+import './Filters.css';
 import React from 'react';
 import FilterButton from './common/FilterButton';
 

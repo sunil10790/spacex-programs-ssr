@@ -1,4 +1,4 @@
-//import './ProgramsList.css';
+import './ProgramsList.css';
 import React from 'react';
 import ProgramCard from './ProgramCard';
 
